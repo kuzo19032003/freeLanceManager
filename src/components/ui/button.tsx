@@ -12,8 +12,8 @@ export default function ButtonUI({
 }: ButtonUIProps) {
 
     const defaultStyleButton = {
-        marginTop: '20px',
-        padding: '10px',
+        marginTop: '15px',
+        padding: '8px',
         backgroundColor: 'rgb(19, 127, 236)',
         borderRadius: 2,
         color: 'white',

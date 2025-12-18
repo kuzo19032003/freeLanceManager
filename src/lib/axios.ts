@@ -1,13 +1,17 @@
-import { store } from '@/store'
+import { setAccessToken } from '@/store/auth/authSlice'
 import axios from 'axios'
 
-let isFreshing = false
+let isRefreshing = false
 let failedQueue: any[] = []
+let store : any
+
+export const injectStore = (_store: any) => {
+    store = _store
+}
 
 const processQueue = (err: any, token = null) => {
     failedQueue.forEach(p => {
-        if (err) p.reject(err)
-        else p.resolve(token)
+        err ? p.reject(err) : p.resolve(token)
     })
     failedQueue = []
 }
@@ -22,9 +26,7 @@ axiosInstance.interceptors.request.use((config) => {
     const state = store.getState().auth
     if (state.accessToken) {
         config.headers.Authorization = `Bearer ${state.accessToken}`
-
     }
-
     return config
 }, err => {
     return Promise.reject(err)
@@ -37,28 +39,33 @@ axiosInstance.interceptors.response.use(
         const state = store.getState().auth
 
         if (err.response?.status === 401 && !orginal._retry && state.accessToken) {
-
-
-            if (isFreshing) {
-                return new Promise((resolve, reject) => {
-
-                })
-            }
-
             orginal._retry = true
-            isFreshing = true
 
+            if (isRefreshing) {
+                return new Promise((resolve, reject) => {
+                    failedQueue.push({ resolve, reject })
+                })
+                    .then((token) => {
+                        orginal.headers.Authorization = `Bearer ${token}`
+                        return axiosInstance(orginal)
+                    })
+            }
+            isRefreshing = true
             try {
                 const reponse = await axiosInstance.post('/auth/refresh')
-                
-
+                const newToken = reponse.data.access_token
+                store.dispatch(setAccessToken(newToken))
+                processQueue(null, newToken)
+                return axiosInstance(orginal)
             } catch (err) {
-
+                processQueue(err, null)
+                return Promise.reject(err)
             }
-
+            finally {
+                isRefreshing = false;
+            }
         }
-
-
+        return Promise.reject(err)
     }
 )
 export default axiosInstance

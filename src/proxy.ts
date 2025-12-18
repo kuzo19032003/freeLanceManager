@@ -2,26 +2,28 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 export function proxy(req: NextRequest) {
+    const pathname = req.nextUrl.pathname
+    const token = req.cookies.get('refresh_Token')?.value
 
-    const token = req.cookies.get('token')?.value
+    const protectedPaths = "/dashboard"
 
-    const protectedPaths = ["/", "/dashboard", "/profile", "/settings"]
+    if (pathname === "/") {
+        if (token) {
+            return NextResponse.rewrite(new URL('/dashboard', req.url))
+        } else {
+            return NextResponse.redirect(new URL('/login', req.url))
+        }
+    }
 
-    const isProtectedPath = protectedPaths.some(path => req.nextUrl.pathname.startsWith(path))
-
-    if (!token && isProtectedPath) {
-        const loginUrl = new URL("/login", req.nextUrl.origin)
+    if (!token && pathname.startsWith(protectedPaths)) {
+        const loginUrl = new URL("/login", req.url)
         return NextResponse.redirect(loginUrl)
     }
 
 
 
-  
 
 
-    return NextResponse.rewrite(req.nextUrl)
+    return NextResponse.next()
 }
 
-export const config = {
-    matcher: ["/"],
-}

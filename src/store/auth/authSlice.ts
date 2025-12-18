@@ -1,12 +1,10 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { loginThunk } from "./authThunk";
+import { loginThunk, logOutThunk, refreshToken } from "./authThunk";
 
 const initialState = {
     user: null,
     accessToken: null,
-    refreshToken: null,
-    refresh: null,
     permissions: [],
     loading: false,
     isHydrated: false
@@ -19,9 +17,12 @@ const authSlice = createSlice({
         loadFromStorage: () => {
             
         },
-        
-        logOut: () =>{
-            
+        setAccessToken: (state,action) =>{
+            state.accessToken = action.payload
+
+        },
+        logOut: (state) =>{
+            state.accessToken = null
         }
     },
     extraReducers: (builder) => {
@@ -31,14 +32,26 @@ const authSlice = createSlice({
             })
             .addCase(loginThunk.fulfilled, (state, action) => {
                 state.loading = false
-                state.accessToken = action.payload.accessToken
+                state.accessToken = action.payload.access_token
             })
             .addCase(loginThunk.rejected, (state) => {
                 state.loading = false
+            })
+
+            .addCase(refreshToken.fulfilled,(state,action)=>{
+                state.accessToken = action.payload
+            })
+
+            .addCase(logOutThunk.fulfilled,(state)=>{
+                state.accessToken = null
+                state.user = null
+                state.permissions = []
+                state.isHydrated = false
+                
             })
     }
 
 })
 
-export const { loadFromStorage } = authSlice.actions
+export const { loadFromStorage,setAccessToken,logOut } = authSlice.actions
 export default authSlice.reducer

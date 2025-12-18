@@ -2,12 +2,24 @@
 
 import { Avatar, Box, Divider, IconButton, Paper, Typography } from "@mui/material";
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import { use, useState } from "react";
-import { Logout, Settings } from "@mui/icons-material";
+import { useState } from "react";
+import { Settings } from "@mui/icons-material";
+import { useAppDispatch } from "@/hooks/useRedux";
+import { logOutThunk } from "@/store/auth/authThunk";
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import { useRouter } from "next/navigation";
 
 export default function MenuSetting() {
 
     const [open, setOpen] = useState<boolean>(false);
+
+    const dispatch = useAppDispatch()
+    const router = useRouter()
+    
+    const handleLogOut = async () => {
+        await dispatch(logOutThunk())
+        router.push('/')
+    }
 
     return (
         <Box sx={{ position: 'relative' }}>
@@ -35,11 +47,11 @@ export default function MenuSetting() {
                         <Avatar /> Profile
                     </Box>
                     <Divider />
-                    <Box sx={{ py: 1, display: 'flex', alignItems: 'center',gap:1 }}>
+                    <Box sx={{ py: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
                         <Settings fontSize="small" /> Setting
                     </Box>
-                    <Box sx={{ py: 1, display: 'flex', alignItems: 'center',gap:1 }}>
-                        <Logout fontSize="small" /> LogOut
+                    <Box sx={{ py: 1, display: 'flex', alignItems: 'center', gap: 1 }} onClick={handleLogOut}>
+                        <MeetingRoomIcon fontSize="small" /> LogOut
                     </Box>
                 </Paper>
             )}

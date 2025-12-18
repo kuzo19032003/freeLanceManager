@@ -1,17 +1,21 @@
 "use client";
 
-import { Box, Toolbar } from "@mui/material";
+import { Box } from "@mui/material";
 import Sidebar from "@/components/layout/Sidebar";
 import Topbar from "@/components/layout/Topbar";
 import { useState } from "react";
-import { ThemeModeProvider, useThemeMode } from "@/ThemeContext";
+import { useThemeMode } from "@/ThemeContext";
+import useAuthInit from "@/hooks/useAuthInit";
 
 export default function DashboardLayout({ children }: any) {
   const { mode } = useThemeMode();
-  const [openSideBar, setOpenSideBar] = useState<boolean>(true)
 
+  const [openSideBar, setOpenSideBar] = useState<boolean>(true)
+  
+  useAuthInit()
+  
   return (
-    <Box sx={{ display: "flex",bgcolor: 'rgb(16, 24, 34)',color:'white' }}>
+    <Box sx={{ display: "flex", bgcolor: 'rgb(16, 24, 34)', color: 'white' }}>
       {/* Header */}
       <Topbar
         openSideBar={openSideBar}

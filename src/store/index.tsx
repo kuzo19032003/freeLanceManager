@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Provider as ProviderRedux } from "react-redux";
 import authReducer from '@/store/auth/authSlice'
 import { ReactNode } from "react";
+import { injectStore } from "@/lib/axios";
 
 export const store = configureStore({
     reducer: {
@@ -13,7 +14,7 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 
-
+injectStore(store)
 
 interface ProviderProps {
     children: ReactNode;
