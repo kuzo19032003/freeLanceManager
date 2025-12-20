@@ -1,5 +1,5 @@
 'use client'
-import { TaskType } from "@/types/task";
+import { TaskType } from "@/types/task.type";
 import {
     Box,
     Card,
@@ -17,7 +17,7 @@ import DraggableTask from "./DraggableTask";
 import DraggableUnassigned from "./DroppableUnassigned";
 import { DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import DraggableDay from "./DroggableDay";
-import CardComponent from "./card";
+import CardComponent from "./card/taskCard";
 
 
 function getCurrentWeek() {

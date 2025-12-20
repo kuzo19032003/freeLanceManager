@@ -1,6 +1,15 @@
 import axiosInstance from "@/lib/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+type User = {
+    fullName: string;
+    email: string;
+    isActive: boolean
+}
+
+type ProfileReponse = {
+    user: User
+}
 
 
 export const loginThunk = createAsyncThunk(
@@ -23,7 +32,7 @@ export const refreshToken = createAsyncThunk(
     async (_, thunkAPI) => {
         try {
             const res = await axiosInstance.post('/auth/refresh')
-            return res.data.access_token
+            return res.data
         } catch (err: any) {
             const errorMessage = err?.response?.data?.message
                 || err?.message
@@ -36,7 +45,8 @@ export const logOutThunk = createAsyncThunk(
     'auth/logOut',
     async (_, thunkAPI) => {
         try {
-            await axiosInstance.post('/auth/logOut')
+            const a = await axiosInstance.post('/auth/logOut')
+
             return true
         } catch (err: any) {
             const errorMessage = err?.response?.data?.message
@@ -53,6 +63,20 @@ export const registerThunk = createAsyncThunk(
         try {
             const res = await axiosInstance.post('/auth/register', payload)
             return res.data
+        } catch (err: any) {
+            const errorMessage = err?.response?.data?.message
+                || err?.message
+                || 'Login failed';
+            return thunkAPI.rejectWithValue(errorMessage)
+        }
+    }
+)
+export const getProfileThunk = createAsyncThunk(
+    'auth/profile',
+    async (payload, thunkAPI) => {
+        try {
+            const res = await axiosInstance.post('/auth/profile', payload)
+            return res.data.user
         } catch (err: any) {
             const errorMessage = err?.response?.data?.message
                 || err?.message

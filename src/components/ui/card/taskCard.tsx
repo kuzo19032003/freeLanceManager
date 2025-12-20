@@ -1,4 +1,4 @@
-import { TaskType } from "@/types/task";
+import { TaskType } from "@/types/task.type";
 import { Box, Card, CardContent, Chip, Typography } from "@mui/material";
 
 import MoreVertIcon from '@mui/icons-material/MoreVert';

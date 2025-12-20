@@ -1,8 +1,17 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { loginThunk, logOutThunk, refreshToken } from "./authThunk";
+import { getProfileThunk, loginThunk, logOutThunk, refreshToken, registerThunk } from "./authThunk";
+import { User } from "@/types/auth.type";
 
-const initialState = {
+interface initialStateProps {
+    user: User | null
+    accessToken: string | null
+    permissions: string[] 
+    loading: boolean
+    isHydrated: boolean
+}
+
+const initialState: initialStateProps = {
     user: null,
     accessToken: null,
     permissions: [],
@@ -14,19 +23,13 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        loadFromStorage: () => {
-            
-        },
-        setAccessToken: (state,action) =>{
+        setAccessToken: (state, action) => {
             state.accessToken = action.payload
-
-        },
-        logOut: (state) =>{
-            state.accessToken = null
         }
     },
     extraReducers: (builder) => {
         builder
+            //Login
             .addCase(loginThunk.pending, (state) => {
                 state.loading = true
             })
@@ -38,20 +41,49 @@ const authSlice = createSlice({
                 state.loading = false
             })
 
-            .addCase(refreshToken.fulfilled,(state,action)=>{
-                state.accessToken = action.payload
+            // refreshToken
+            .addCase(refreshToken.fulfilled, (state, action) => {
+                state.accessToken = action.payload.access_token
+                state.isHydrated = true
+
+            })
+            .addCase(refreshToken.rejected, (state) => {
+                state.isHydrated = true
             })
 
-            .addCase(logOutThunk.fulfilled,(state)=>{
+            //Log out
+            .addCase(logOutThunk.fulfilled, (state) => {
                 state.accessToken = null
                 state.user = null
                 state.permissions = []
                 state.isHydrated = false
-                
+            })
+
+            //Register
+            .addCase(registerThunk.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(registerThunk.fulfilled, (state, action) => {
+                state.loading = false
+            })
+            .addCase(registerThunk.rejected, (state) => {
+                state.loading = false
+            })
+
+            // getProfile
+            .addCase(getProfileThunk.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(getProfileThunk.fulfilled, (state, action) => {
+                state.loading = false
+                state.user = action.payload
+            })
+            .addCase(getProfileThunk.rejected, (state) => {
+                state.loading = false
             })
     }
 
 })
 
-export const { loadFromStorage,setAccessToken,logOut } = authSlice.actions
+export const { setAccessToken } = authSlice.actions
 export default authSlice.reducer

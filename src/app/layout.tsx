@@ -33,13 +33,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeModeProvider>
-          <Providers>
-            <ReduxProvider>
-              
-              <ToastContainer/>
+          <ReduxProvider>
+            <Providers>
+              <ToastContainer />
               {children}
-            </ReduxProvider>
-          </Providers>
+            </Providers>
+          </ReduxProvider>
         </ThemeModeProvider>
       </body>
     </html>

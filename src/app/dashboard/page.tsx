@@ -1,10 +1,11 @@
-import StatsCard from "@/components/ui/StatsCard";
+
 import { Grid } from "@mui/material";
 
 import PersonIcon from "@mui/icons-material/Person";
 import WorkIcon from "@mui/icons-material/Work";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import StatsCard from "@/components/ui/card/StatsCard";
 
 export default function DashboardPage() {
   const stats = [

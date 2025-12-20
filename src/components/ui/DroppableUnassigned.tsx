@@ -1,4 +1,4 @@
-import { TaskType } from "@/types/task";
+import { TaskType } from "@/types/task.type";
 import { useDraggable, useDroppable } from "@dnd-kit/core";
 import { Box, Typography } from "@mui/material";
 import DraggableTask from "./DraggableTask";

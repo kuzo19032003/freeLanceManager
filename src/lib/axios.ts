@@ -3,7 +3,7 @@ import axios from 'axios'
 
 let isRefreshing = false
 let failedQueue: any[] = []
-let store : any
+let store: any
 
 export const injectStore = (_store: any) => {
     store = _store
@@ -37,8 +37,8 @@ axiosInstance.interceptors.response.use(
         const orginal = err.config
 
         const state = store.getState().auth
-
-        if (err.response?.status === 401 && !orginal._retry && state.accessToken) {
+ 
+        if (err.response?.status === 401 && !orginal._retry && state.accessToken ) {
             orginal._retry = true
 
             if (isRefreshing) {

@@ -5,7 +5,7 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useState } from "react";
 import { Settings } from "@mui/icons-material";
 import { useAppDispatch } from "@/hooks/useRedux";
-import { logOutThunk } from "@/store/auth/authThunk";
+import { getProfileThunk, logOutThunk } from "@/store/auth/authThunk";
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import { useRouter } from "next/navigation";
 
@@ -15,11 +15,24 @@ export default function MenuSetting() {
 
     const dispatch = useAppDispatch()
     const router = useRouter()
-    
+
     const handleLogOut = async () => {
-        await dispatch(logOutThunk())
-        router.push('/')
+        try {
+            await dispatch(logOutThunk())
+            router.push('/')
+        } catch (err) {
+            console.log(err)
+        }
     }
+
+    const handleProfile = () => {
+        dispatch(getProfileThunk())
+            .then((action) => {
+                if (action.type.endsWith('/fulfilled')) {
+                    router.push('/dashboard/profile');
+                }
+            });
+    };
 
     return (
         <Box sx={{ position: 'relative' }}>
@@ -43,7 +56,7 @@ export default function MenuSetting() {
                         },
                     }}
                 >
-                    <Box sx={{ py: 1, display: 'flex', alignItems: 'center' }}>
+                    <Box sx={{ py: 1, display: 'flex', alignItems: 'center' }} onClick={handleProfile}>
                         <Avatar /> Profile
                     </Box>
                     <Divider />

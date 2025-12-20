@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import DraggableTask from "./DraggableTask";
 import { useDroppable } from "@dnd-kit/core";
-import { TaskType } from "@/types/task";
+import { TaskType } from "@/types/task.type";
 
 type WeekDay = {
     dayName: string;
