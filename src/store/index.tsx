@@ -2,12 +2,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider as ProviderRedux } from "react-redux";
 import authReducer from '@/store/auth/authSlice'
+import taskReducer from '@/store/tasks/taskSlice'
+
 import { ReactNode } from "react";
 import { injectStore } from "@/lib/axios";
 
 export const store = configureStore({
     reducer: {
-        auth: authReducer
+        auth: authReducer,
+        tasks: taskReducer
     }
 });
 

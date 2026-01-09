@@ -13,11 +13,11 @@ import {
     Typography
 } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
-import DraggableTask from "./DraggableTask";
-import DraggableUnassigned from "./DroppableUnassigned";
+import DraggableTask from "../draggDrogg/DraggableTask";
+import DraggableUnassigned from "../draggDrogg/DroppableUnassigned";
 import { DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
-import DraggableDay from "./DroggableDay";
-import CardComponent from "./card/taskCard";
+import DraggableDay from "../draggDrogg/DroggableDay";
+import CardComponent from "./card/taskDetailCard";
 
 
 function getCurrentWeek() {

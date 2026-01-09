@@ -18,11 +18,11 @@ import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import CasesOutlinedIcon from '@mui/icons-material/CasesOutlined';
 import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import MenuSetting from "../ui/MenuSetting";
 import ThemeToggle from "@/ThemeToggle";
-
 interface SidebarProps {
   openSideBar: boolean;
 }
@@ -38,7 +38,7 @@ const sidebarWidthMin = 80;
 
 const navItems: navItemsType[] = [
   { label: "Dashboard", href: "/dashboard", icon: <DashboardOutlinedIcon /> },
-  { label: "Tasks", href: "/dashboard/tasks", icon: <TaskAltOutlinedIcon /> },
+  { label: "Tasks", href: "/dashboard/tasks", icon: <AssignmentIcon /> },
   { label: "Clients", href: "/dashboard/clients", icon: <GroupsOutlinedIcon /> },
   { label: "Projects", href: "/dashboard/projects", icon: <CasesOutlinedIcon /> },
 ];

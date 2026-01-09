@@ -1,16 +1,6 @@
 import axiosInstance from "@/lib/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-type User = {
-    fullName: string;
-    email: string;
-    isActive: boolean
-}
-
-type ProfileReponse = {
-    user: User
-}
-
 
 export const loginThunk = createAsyncThunk(
     'auth/login',

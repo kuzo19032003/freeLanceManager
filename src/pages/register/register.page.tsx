@@ -13,7 +13,7 @@ import ButtonUI from "@/components/ui/button";
 
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
-import {  registerThunk } from "@/store/auth/authThunk";
+import { registerThunk } from "@/store/auth/authThunk";
 import { toast } from "react-toastify";
 import Loading from "@/loading";
 import { useState } from "react";
@@ -22,7 +22,7 @@ export default function Register() {
 
     const dispatch = useAppDispatch();
     const router = useRouter();
-    
+
     const { loading } = useAppSelector(state => state.auth);
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -41,12 +41,12 @@ export default function Register() {
         setIsLoading(true)
         try {
             const result = await dispatch(registerThunk(data))
-
+           
             if (registerThunk.fulfilled.match(result)) {
                 router.push('/login')
                 toast.success("Đăng ký thành công");
             } else {
-                toast.error("Đăng ký thất bại");
+                toast.error(typeof result.payload === 'string' ? result.payload : "Đăng ký thất bại");
             }
         } finally {
             setIsLoading(false)

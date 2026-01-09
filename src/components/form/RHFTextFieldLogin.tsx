@@ -11,7 +11,7 @@ export default function LoginTextField({ name, label, ...props }: LoginTextField
     return (
         <RHFTextField
             name={name}
-            label={label} 
+            label={label}
             {...props}
             sx={{
                 backgroundColor: 'rgb(25, 39, 52)',
@@ -23,12 +23,12 @@ export default function LoginTextField({ name, label, ...props }: LoginTextField
                 },
                 "& .MuiOutlinedInput-input": {
                     color: "rgb(80, 115, 138)",
-
-
+                    // transition: "background-color 5000s ease-in-out 0s",
                     "&:-webkit-autofill": {
                         WebkitBoxShadow: "0 0 0 100px rgb(25, 39, 52) inset",
                         WebkitTextFillColor: "rgb(80, 115, 138)",
                         caretColor: "rgb(80, 115, 138)",
+                        // borderRadius: '8px',
                     },
                     "&:-webkit-autofill:hover": {
                         WebkitBoxShadow: "0 0 0 100px rgb(25, 39, 52) inset",
