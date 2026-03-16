@@ -17,7 +17,7 @@ import DraggableTask from "../draggDrogg/DraggableTask";
 import DraggableUnassigned from "../draggDrogg/DroppableUnassigned";
 import { DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import DraggableDay from "../draggDrogg/DroggableDay";
-import CardComponent from "./card/taskDetailCard";
+import CardComponent from "./card/taskCard";
 
 
 function getCurrentWeek() {

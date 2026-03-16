@@ -1,18 +1,21 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { getProfileThunk, loginThunk, logOutThunk, refreshToken, registerThunk } from "./authThunk";
+import { getProfileThunk, loginThunk, logOutThunk, refreshToken, registerThunk, searchUsersThunk } from "./authThunk";
 import { User } from "@/types/auth.type";
+import { getTaskDetailThunk } from "../tasks/taskThunk";
 
 interface initialStateProps {
     user: User | null
+    users: User[] | null
     accessToken: string | null
-    permissions: string[] 
+    permissions: string[]
     loading: boolean
     isHydrated: boolean
 }
 
 const initialState: initialStateProps = {
     user: null,
+    users: [],
     accessToken: null,
     permissions: [],
     loading: false,
@@ -81,6 +84,20 @@ const authSlice = createSlice({
             .addCase(getProfileThunk.rejected, (state) => {
                 state.loading = false
             })
+
+            // searchUses
+            .addCase(searchUsersThunk.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(searchUsersThunk.fulfilled, (state, action) => {
+                state.loading = false
+                state.users = action.payload
+            })
+            .addCase(searchUsersThunk.rejected, (state) => {
+                state.loading = false
+            })
+
+
     }
 
 })

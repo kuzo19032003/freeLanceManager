@@ -75,3 +75,29 @@ export const getProfileThunk = createAsyncThunk(
         }
     }
 )
+export const searchUsersThunk = createAsyncThunk<
+    any,
+    string,
+    { rejectValue: string }
+>(
+    'auth/users',
+    async (keyword, thunkAPI) => {
+        console.log("CALL API search:", keyword)
+
+        try {
+            const res = await axiosInstance.get('/users', {
+                params: {
+                    search: keyword,
+                    limit: 10
+                }
+            })
+            return res.data.Users
+        } catch (err: any) {
+
+            const errorMessage = err?.response?.data?.message
+                || err?.message
+                || 'Get tasks failed';
+            return thunkAPI.rejectWithValue(errorMessage)
+        }
+    }
+)

@@ -1,8 +1,9 @@
 'use client';
 import TasksTable from "@/components/tasks/TaskTable";
-import CardComponent from "@/components/ui/card/taskDetailCard";
-import CardDetailComponent from "@/components/ui/card/taskDetailCard";
+import CardComponent from "@/components/ui/card/taskCard";
+import CardDetailComponent from "@/components/ui/card/taskCard";
 import { useAppSelector } from "@/hooks/useRedux";
+import { store } from "@/store";
 import { getAllTasksThunk } from "@/store/tasks/taskThunk";
 import { Box, Divider, Grid, Typography } from "@mui/material";
 import { useEffect } from "react";
@@ -12,10 +13,13 @@ export default function TasksPage() {
     const dispatch = useDispatch();
     const { tasks } = useAppSelector(state => state.tasks);
 
-    useEffect(() => {
-        dispatch(getAllTasksThunk() as any);
-    }, [])
 
+    useEffect(() => {
+        const getAllTask = async () => {
+            await dispatch(getAllTasksThunk() as any);
+        }
+        getAllTask()
+    }, [])
 
 
     return (
@@ -25,9 +29,9 @@ export default function TasksPage() {
                     My Tasks
                 </Typography>
             </Box>
-            <Grid container spacing={3}>
+            <Grid container spacing={6}>
                 {
-                    tasks.length > 0
+                    tasks.length > 0 
                         ? (
                             tasks.map((i, index) => (
                                 <Grid size={4} key={index}>

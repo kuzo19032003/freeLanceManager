@@ -8,7 +8,11 @@ type RHFTextFieldProps = {
 } & React.ComponentProps<typeof TextField>;
 
 
-function RHFTextField({ name, label, ...props }: RHFTextFieldProps) {
+function RHFTextField({
+    name,
+    label,
+    ...props
+}: RHFTextFieldProps) {
     const {
         control
     } = useFormContext();

@@ -35,12 +35,9 @@ export default function Topbar({ openSideBar, setOpenSideBar }: TopbarProps) {
       }}
     >
       <Toolbar>
-
         <IconButton onClick={toggleSideBar} sx={{ '&:hover': { backgroundColor: 'transparent' } }}>
           <MenuIcon sx={{ color: "white" }} />
         </IconButton>
-
-
       </Toolbar>
     </AppBar>
   );

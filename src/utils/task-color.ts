@@ -20,16 +20,16 @@ export function getTaskBgColor(status: string): string {
     }
     return statusBgColor[status] || 'rgb(28, 48, 72)';
 }
-export function getTaskPriorityColor(priority: TaskPriority): string {
-    const priorityColor = {
+export function getTaskPriorityColor(priority: string): string {
+    const priorityColor: Record<string, string> = {
         High: 'rgba(248, 26, 59, 0.94)',
         Medium: 'rgb(255, 159, 67)',
         Low: 'rgb(87, 192, 173)',
     }
     return priorityColor[priority] || 'rgb(76, 138, 205)';
 }
-export function getTaskPriorityBgColor(priority: TaskPriority): string {
-    const priorityBgColor = {
+export function getTaskPriorityBgColor(priority: string): string {
+    const priorityBgColor: Record<string, string> = {
         High: 'rgba(77, 24, 41, 1)',
         Medium: 'rgb(60, 44, 29)',
         Low: 'rgb(31, 70, 75)',

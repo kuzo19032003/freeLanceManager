@@ -40,11 +40,11 @@ export interface Task {
 
     // time
     startTime?: string | null
-    dueTime?: string | null
+    dueTime?: string | undefined
     completedAt?: string | null
 
     // detail
-    detail: TaskDetail[]
+    details: TaskDetail[]
 }
 
 export interface TaskDetail {
@@ -66,22 +66,48 @@ export interface TaskDetail {
 
 
 export interface CreateTaskPayload {
+    task_id: string
     title: string
     description?: string
     priority?: TaskPriority
     assignedTo?: string
 
-    startTime?: string
-    dueTime?: string
+    start_Time?: string
+    due_time?: string
+
 
     details?: {
         title: string
-        description: string
-        order?: number
     }[]
 }
 
 export interface UpdateTaskStatusPayload {
     taskId: number
     status: TaskStatus
+}
+
+
+export interface taskReponse {
+    title: string
+    description: string
+    priority: TaskPriority
+    assignedTo: string
+
+    start_Time: string
+    due_time: string
+
+
+    details: {
+        title: string
+    }[]
+
+    attachments: []
+}
+
+export interface UpdateTaskDetailStatusPayload {
+    detailId: number
+}
+export interface TodoItem {
+    title: string,
+    isCompleted: boolean,
 }

@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { getProfileThunk, refreshToken } from "@/store/auth/authThunk";
 
 
+
 const theme = createTheme({
     palette: {
         mode: "light",
@@ -16,7 +17,7 @@ const theme = createTheme({
 export function Providers({ children }: { children: React.ReactNode }) {
 
     const dispatch = useAppDispatch()
-    const { isHydrated } = useAppSelector(state => state.auth)
+    const { isHydrated, accessToken } = useAppSelector(state => state.auth)
 
     useEffect(() => {
         if (!isHydrated) {

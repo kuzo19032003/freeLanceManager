@@ -18,12 +18,18 @@ const processQueue = (err: any, token = null) => {
 
 
 const axiosInstance = axios.create({
-    baseURL: process.env.NEXT_PRIVATE_API_UR || 'http://localhost:8080/api/v1',
+    baseURL: process.env.NEXT_PRIVATE_API_URL || 'http://localhost:8080/api/v1',
+    withCredentials: true,
+})
+const refreshInstance = axios.create({
+    baseURL: process.env.NEXT_PRIVATE_API_URL || 'http://localhost:8080/api/v1',
     withCredentials: true,
 })
 
 axiosInstance.interceptors.request.use((config) => {
+
     const state = store.getState().auth
+
     if (state.accessToken) {
         config.headers.Authorization = `Bearer ${state.accessToken}`
     }
@@ -34,11 +40,12 @@ axiosInstance.interceptors.request.use((config) => {
 axiosInstance.interceptors.response.use(
     res => res,
     async (err) => {
+        
         const orginal = err.config
 
         const state = store.getState().auth
- 
-        if (err.response?.status === 401 && !orginal._retry && state.accessToken ) {
+
+        if (err.response?.status === 401 && !orginal._retry && state.accessToken) {
             orginal._retry = true
 
             if (isRefreshing) {
@@ -52,7 +59,7 @@ axiosInstance.interceptors.response.use(
             }
             isRefreshing = true
             try {
-                const reponse = await axiosInstance.post('/auth/refresh')
+                const reponse = await refreshInstance.post('/auth/refresh')
                 const newToken = reponse.data.access_token
                 store.dispatch(setAccessToken(newToken))
                 processQueue(null, newToken)
